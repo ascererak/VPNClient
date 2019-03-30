@@ -1,0 +1,171 @@
+﻿<Window x:Class="VPNClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VPNClient"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
+        Title="" Height="600" Width="1080" WindowStartupLocation="CenterScreen" WindowStyle="None" Foreground="White" ResizeMode="NoResize">
+    <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="60"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="60"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style x:Key="buttonHover" TargetType="Button">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#ff13688d">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid Background="LightGray">
+        <Grid x:Name="GridTop" Height="40" VerticalAlignment="Top" Background="#ff13688d" MouseDown="GridTop_MouseDown">
+            <TextBlock Text="Tcp Vpn advanced mastery pro client 3000" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="" VerticalAlignment="Center" FontSize="18"/>
+                <materialDesign:PopupBox Margin="5" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                    <StackPanel Width="150">
+                        <Button Content="Account"/>
+                        <Button Content="Settings"/>
+                        <Button Content="Help"/>
+                        <Separator />
+                        <Button x:Name="ButtonPopUpLogout" Content="Logout" Click="ButtonPopUpLogout_Click"/>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                <Button x:Name="btnSubmit" Style="{StaticResource buttonHover}" Click="ButtonPopUpLogout_Click">
+                    <materialDesign:PackIcon Kind="Close" Foreground="White" Width="25" Height="25" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#ff1f3d68" Panel.ZIndex="1">
+            <StackPanel>
+                <Grid Height="150" Background="White">
+                    <Button x:Name="ButtonCloseMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="Collapsed" Click="ButtonCloseMenu_Click">
+                        <materialDesign:PackIcon Kind="ArrowLeft" Foreground="#ff1f3d68" Width="25" Height="25"/>
+                    </Button>
+                    <Button x:Name="ButtonOpenMenu" Width="60" Height="60" Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="ButtonOpenMenu_Click">
+                        <materialDesign:PackIcon Kind="Menu" Foreground="#ff1f3d68" Width="25" Height="25"/>
+                    </Button>
+                </Grid>
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="#ff13688d">
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ViewDashboard" Margin="10" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="Home" VerticalAlignment="Center" FontSize="17" Foreground="LightGray" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Pencil" Width="25" Margin="10" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="Create" VerticalAlignment="Center" FontSize="17" Foreground="LightGray" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Ticket" Width="25" Margin="10" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="Tickets" VerticalAlignment="Center" FontSize="17" Foreground="LightGray" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Message" Width="25" Margin="10" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="Messages" VerticalAlignment="Center" FontSize="17" Foreground="LightGray" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="GithubBox" Width="25" Margin="10" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock Text="GitHub" VerticalAlignment="Center" FontSize="17" Foreground="LightGray" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </StackPanel>
+        </Grid>
+        <Grid Height="560" Width="1020" Margin="60 40 0 0">
+            <ListView Name="listview_scaner">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListView}">
+                        <Setter Property="ItemContainerStyle">
+                            <Setter.Value>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Path=Type}" />
+                            <GridViewColumn Header="Port ID" DisplayMemberBinding="{Binding Path=PortNumber}" />
+                            <GridViewColumn Header="Local Adress" DisplayMemberBinding="{Binding Path=Local}" />
+                            <GridViewColumn Header="Remote Adress" DisplayMemberBinding="{Binding Path=Remote}" />
+                            <GridViewColumn Header="State" DisplayMemberBinding="{Binding Path=State}" Width="150"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+    <!--<ListView Name="listview_scaner" Margin="5">
+        <ListView.Resources>
+            <Style TargetType="{x:Type ListView}">
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ListView.Resources>
+        <ListView.View>
+            <GridView>
+                <GridView.Columns>
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Path=Type}" Width="100"/>
+                    <GridViewColumn Header="Port ID" DisplayMemberBinding="{Binding Path=PortNumber}"
+                                    Width="150"/>
+                    <GridViewColumn Header="Local Adress" DisplayMemberBinding="{Binding Path=Local}"
+                                    Width="250"/>
+                    <GridViewColumn Header="Remote Adress" DisplayMemberBinding="{Binding Path=Remote}" Width="250"/>
+                    <GridViewColumn Header="State" DisplayMemberBinding="{Binding Path=State}" Width="250"/>
+                </GridView.Columns>
+            </GridView>
+        </ListView.View>
+        </ListView>-->
+</Window>
